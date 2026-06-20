@@ -1,58 +1,73 @@
-// Configuración interna (Invisibles para el salón)
-const CONFIG = {
-    cotizacionDolar: 1350 // Modificás solo esto a fin de mes
-};
+/* ==========================================================================
+   VISIÓN DESIGN — PORTAL PRIVADO DE PRECIOS (PESOS ARS DIRECTOS)
+   ========================================================================== */
 
-// 1. Base de datos: Servicios Individuales
+// 1. Base de datos: Servicios Individuales (Precios fijos en ARS)
 const individualesConfig = [
-    { nombre: "Invitación Estática", descripcion: "Invitación interactiva base en formato digital fija con control RSVP nativo.", usdMayorista: 10, usdSugerido: 20 },
-    { nombre: "Invitación Web Interactiva", descripcion: "Landing page premium animada con mapas, pases, contador y botones interactivos.", usdMayorista: 15, usdSugerido: 30 },
-    { nombre: "Álbum Digital en la Nube", descripcion: "Galería fotográfica interactiva donde los invitados suben fotos mediante QR.", usdMayorista: 12, usdSugerido: 25 },
-    { nombre: "Muro de Deseos en Vivo", descripcion: "Pantalla interactiva para proyectar los mensajes y fotos de los invitados en tiempo real.", usdMayorista: 18, usdSugerido: 40 }
+    { 
+        nombre: "Invitación Express", 
+        descripcion: "Invitación interactiva base en formato digital fija con control RSVP nativo.", 
+        arsMayorista: 15000,   // <-- Poné el billete exacto en pesos acá
+        arsSugerido: 20000 
+    },
+    { 
+        nombre: "Invitación Web Interactiva", 
+        descripcion: "Landing page premium animada con mapas, pases, contador y botones interactivos.", 
+        arsMayorista: 30000, 
+        arsSugerido: 40000 
+    },
+    { 
+        nombre: "Álbum Digital en la Nube", 
+        descripcion: "Galería fotográfica interactiva donde los invitados suben fotos mediante QR.", 
+        arsMayorista: 40000, 
+        arsSugerido: 55000 
+    },
+    { 
+        nombre: "Muro de Deseos en Vivo", 
+        descripcion: "Pantalla interactiva para proyectar los mensajes y fotos de los invitados en tiempo real.", 
+        arsMayorista: 40000, 
+        arsSugerido: 55000 
+    }
 ];
 
-// 2. Base de datos: Packs Promocionales (Actualizados)
+// 2. Base de datos: Packs Promocionales (Precios fijos en ARS)
 const packsConfig = [
     { 
         nombre: "Pack Inicial", 
         descripcion: "Invitación digital estática combinada con la galería fotográfica en la nube para los invitados.", 
-        usdMayorista: 18, 
-        usdSugerido: 35 
+        arsMayorista: 50000, 
+        arsSugerido: 65000 
     },
     { 
         nombre: "Pack Essential", 
         descripcion: "Invitación Web interactiva animada full, combinada con el álbum digital en la nube.", 
-        usdMayorista: 24, 
-        usdSugerido: 50 
+        arsMayorista: 65000, 
+        arsSugerido: 85000 
     },
     { 
         nombre: "Pack Premium", 
         descripcion: "La experiencia digital absoluta para el evento: Invitación Web, Álbum en la nube y el Muro de Deseos en vivo para la pantalla del salón.", 
-        usdMayorista: 35, 
-        usdSugerido: 75 
+        arsMayorista: 95000, 
+        arsSugerido: 130000 
     }
 ];
 
-// Función para redondear a múltiplos de 500 para el mercado argentino
-function redondearPrecios(valor) {
-    return Math.round(valor / 500) * 500;
-}
-
 // Generador genérico de tarjetas
-function crearCard(servicio, esPack = false) {
-    const costoEstudio = redondearPrecios(servicio.usdMayorista * CONFIG.cotizacionDolar);
-    const precioSugerido = redondearPrecios(servicio.usdSugerido * CONFIG.cotizacionDolar);
+function crearCard(servicio, esPack = false) { 
+    // Ahora tomamos los valores directos en pesos de la base de datos
+    const costoEstudio = servicio.arsMayorista;
+    const precioSugerido = servicio.arsSugerido;
     const ganancia = precioSugerido - costoEstudio;
 
     const card = document.createElement("div");
     card.className = "card-servicio";
 
-    // si es pack, le agregamos una clase extra para destacar
+    // Si es un pack, le inyectamos la clase de destaque para el borde premium
     if (esPack) {
         card.classList.add("card-destacada");
     }
 
-    card.style.opacity = "0"; // Inicial para GSAP
+    card.style.opacity = "0"; // Propiedad inicial para la transición fluida de GSAP
 
     card.innerHTML = `
         <h3>${servicio.nombre}</h3>
@@ -77,18 +92,21 @@ function crearCard(servicio, esPack = false) {
 
 // Orquestación del render y animaciones GSAP
 function renderApp() {
-    const contenedorIndiv = document.getElementById("contenedor-individuales");
+    const contenedorIndiv = document.getElementById("contenedor-individuals"); // Se adaptó al HTML
     const contenedorPacks = document.getElementById("contenedor-packs");
 
-    if (contenedorIndiv && contenedorPacks) {
-        contenedorIndiv.innerHTML = "";
+    // Buscamos compatibilidad con ambos nombres de id por las dudas
+    const targetIndiv = contenedorIndiv || document.getElementById("contenedor-individuales");
+
+    if (targetIndiv && contenedorPacks) {
+        targetIndiv.innerHTML = "";
         contenedorPacks.innerHTML = "";
 
-        // Inyectar Datos
-        individualesConfig.forEach(s => contenedorIndiv.appendChild(crearCard(s)));
+        // Inyectar Datos mapeando las listas fijas
+        individualesConfig.forEach(s => targetIndiv.appendChild(crearCard(s, false)));
         packsConfig.forEach(p => contenedorPacks.appendChild(crearCard(p, true)));
 
-        // --- MAGIA GSAP TIMELINE ---
+        // --- ANIMACIÓN GSAP TIMELINE ---
         const tl = gsap.timeline();
         
         tl.from(".main-header", { opacity: 0, y: -20, duration: 0.6, ease: "power2.out" })

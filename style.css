@@ -93,8 +93,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background: var(--text-primary);
-    color: var(--bg-main);
+    background: transparent;
+    color: #2ecc71;
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
@@ -102,9 +102,16 @@ body {
     border-radius: 30px;
     width: 100%;
     box-sizing: border-box;
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+    border: 2px solid #2ecc71;
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.4), inset 0 0 20px rgba(46, 204, 113, 0.1);
 }
-.icon-wa { width: 20px; height: 20px; fill: var(--bg-main); }
+
+.btn-whatsapp-cta:hover {
+    background: #2ecc71;
+    color: #fff;
+    box-shadow: 0 0 30px rgba(46, 204, 113, 0.6), inset 0 0 30px rgba(46, 204, 113, 0.2);
+}
+.icon-wa { width: 20px; height: 20px; fill: #2ecc71; }
 
 /* Footer */
 .main-footer { text-align: center; padding: 20px 0 40px 0; font-size: 0.75rem; color: #444; border-top: 1px solid var(--border-color); }
