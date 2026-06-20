@@ -1,0 +1,139 @@
+/* Variables de Diseño */
+:root {
+    --bg-main: #0b0b0b;
+    --bg-card: #141414;
+    --bg-card1: #cab53a;
+    --border-color: #242424;
+    --text-primary: #ffffff;
+    --text-secondary: #8e8e93;
+    --color-profit: #2ecc71;
+    --color-wa: #25d366;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Urbanist', sans-serif;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.main-header {
+    padding: 40px 20px 20px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+.brand-sub {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--text-secondary);
+    font-weight: 700;
+}
+.main-header h1 {
+    font-size: 1.8rem;
+    margin: 10px 0;
+    font-weight: 600;
+}
+.main-header .separator { color: var(--text-secondary); }
+.header-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.4;
+}
+
+/* Contenedores y Grillas */
+.app-content { padding: 20px; max-width: 500px; margin: 0 auto; }
+.section-tarifario { 
+    margin-bottom: 40px; 
+}
+.section-title-wrapper h2 { font-size: 1.4rem; margin: 0 0 5px 0; }
+.section-title-wrapper p { color: var(--text-secondary); margin: 0 0 20px 0; font-size: 0.9rem; }
+
+.grid-tarifario { display: flex; flex-direction: column; gap: 20px; }
+
+/* Tarjetas */
+.card-servicio {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 20px;
+}
+.card-servicio h3 { margin: 0 0 6px 0; font-size: 1.2rem; font-weight: 600; }
+.card-servicio .descripcion { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4; margin: 0 0 20px 0; }
+
+/* Desglose Monetario */
+.desglose-precios { border-top: 1px solid var(--border-color); padding-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+.item-precio { display: flex; justify-content: space-between; font-size: 0.9rem; }
+.item-precio span { color: #a1a1a6; }
+.item-precio.ganancia {
+    background: rgba(46, 204, 113, 0.05);
+    border: 1px solid rgba(46, 204, 113, 0.15);
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 5px;
+    align-items: center;
+}
+.item-precio.ganancia span { color: var(--text-primary); font-weight: 500; }
+.tag-ganancia { color: var(--color-profit); font-size: 1.15rem; font-weight: 700; }
+
+/* Condiciones */
+.section-condiciones { background: #111; padding: 20px; border-radius: 12px; margin-bottom: 40px; border: 1px solid var(--border-color); }
+.section-condiciones h3 { margin: 0 0 10px 0; font-size: 1rem; }
+.condiciones-list { margin: 0; padding-left: 20px; color: var(--text-secondary); font-size: 0.85rem; }
+.condiciones-list li { margin-bottom: 8px; line-height: 1.4; }
+
+/* Botón de WhatsApp Premium */
+.section-contacto { text-align: center; margin-bottom: 40px; }
+.btn-whatsapp-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--text-primary);
+    color: var(--bg-main);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 16px 24px;
+    border-radius: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+.icon-wa { width: 20px; height: 20px; fill: var(--bg-main); }
+
+/* Footer */
+.main-footer { text-align: center; padding: 20px 0 40px 0; font-size: 0.75rem; color: #444; border-top: 1px solid var(--border-color); }
+.footer-confidential { color: #555; margin-top: 5px; font-style: italic; }
+.loader { color: var(--text-secondary); text-align: center; padding: 20px; font-size: 0.9rem;
+}
+
+/* Condición-grupo */
+.condicion-grupo h4 {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    margin: 0 0 6px 0;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+.condiciones-list strong {
+    color: var(--text-primary);
+}
+
+/* Tarjeta de Pack Destacada con borde degradado */
+.card-servicio.card-destacada {
+    position: relative;
+    border: 1px solid transparent;
+    /* Creamos el degradado de azul a verde esmeralda */
+    background-image: linear-gradient(var(--bg-card), var(--bg-card)), 
+                      linear-gradient(135deg, #007aff, #2ecc71);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    
+    /* Un reflejo sutil en el fondo para dar volumen */
+    box-shadow: 0 12px 40px rgba(46, 204, 113, 0.08);
+}
